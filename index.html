@@ -1,14 +1,726 @@
-<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Уроки+</title><style>
-:root{--bg:#07111f;--card:#0e213a;--border:#1b3a5d;--text:#e8f2ff;--muted:#91a7c0;--a:#38bdf8}*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 20% 0%,#10315255,transparent 30%),var(--bg);color:var(--text)}header{position:sticky;top:0;background:#07111fd9;backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:5}.nav{max-width:1100px;margin:auto;padding:18px 20px;display:flex;justify-content:space-between}.logo{font-weight:800;font-size:21px}.logo span{color:var(--a)}nav a{color:var(--muted);margin-left:20px;text-decoration:none}.wrap{max-width:1100px;margin:auto;padding:0 20px}.hero{text-align:center;padding:90px 0 55px}.badge{display:inline-block;color:var(--a);border:1px solid var(--border);padding:7px 13px;border-radius:99px}.hero h1{font-size:clamp(40px,7vw,72px);line-height:1;margin:20px 0}.hero p{color:var(--muted);max-width:650px;margin:auto}.search{margin-top:30px;width:min(680px,100%);padding:16px 18px;border:1px solid var(--border);border-radius:14px;background:var(--card);color:var(--text);outline:0}.search:focus{border-color:var(--a)}section{padding:30px 0 70px}.head{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px}.head p{color:var(--muted)}.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}.filter{border:1px solid var(--border);background:var(--card);color:var(--muted);padding:9px 14px;border-radius:10px;cursor:pointer}.filter.active,.filter:hover{color:var(--text);border-color:var(--a)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:linear-gradient(145deg,#0e213a,#09192b);border:1px solid var(--border);border-radius:17px;padding:22px;transition:.2s}.card:hover{transform:translateY(-4px);border-color:#2d5b86}.top{display:flex;justify-content:space-between}.icon{font-size:22px}.tag{font-size:12px;color:var(--a)}.card p{color:var(--muted);min-height:66px}.btn{width:100%;padding:11px;border:0;border-radius:10px;background:#153553;color:var(--text);cursor:pointer}.btn:hover{background:#1d486f}footer{border-top:1px solid var(--border);text-align:center;color:var(--muted);padding:28px}.modal{display:none;position:fixed;inset:0;background:#000b;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.box{position:relative;width:min(700px,100%);max-height:85vh;overflow:auto;background:#0b1a2d;border:1px solid var(--border);border-radius:18px;padding:28px}.close{position:absolute;right:15px;top:15px;width:35px;height:35px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);cursor:pointer}.modal small{color:var(--a)}.modal p{color:#c7d6e8}.empty{display:none;color:var(--muted);text-align:center;padding:30px}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){nav{display:none}.grid{grid-template-columns:1fr}.hero{padding:65px 0 40px}}
-</style></head><body>
-<header><div class="nav wrap"><div class="logo">Уроки<span>+</span></div><nav><a href="#instructions">Инструкции</a><a href="#about">О сайте</a></nav></div></header>
-<main><section class="hero"><div class="wrap"><div class="badge">📚 База полезных идей</div><h1>Уроки без скуки</h1><p>Здесь будут твои инструкции, советы и материалы.</p><input id="search" class="search" placeholder="🔎  Найти инструкцию..."></div></section>
-<section id="instructions"><div class="wrap"><div class="head"><div><h2>Инструкции</h2><p>Замени заголовки и тексты своими.</p></div></div><div class="filters"><button class="filter active" data-cat="all">Все</button><button class="filter" data-cat="one">Категория 1</button><button class="filter" data-cat="two">Категория 2</button><button class="filter" data-cat="three">Категория 3</button></div><div id="grid" class="grid">
-<div class="card" data-cat="one"><div class="top"><span class="icon">💡</span><span class="tag">Категория 1</span></div><h3>Название инструкции 1</h3><p>Короткое описание инструкции. Замени этот текст своим.</p><button class="btn" onclick="openModal('Название инструкции 1','Категория 1')">Открыть</button></div>
-<div class="card" data-cat="two"><div class="top"><span class="icon">🎯</span><span class="tag">Категория 2</span></div><h3>Название инструкции 2</h3><p>Здесь будет краткое описание второго материала.</p><button class="btn" onclick="openModal('Название инструкции 2','Категория 2')">Открыть</button></div>
-<div class="card" data-cat="three"><div class="top"><span class="icon">📝</span><span class="tag">Категория 3</span></div><h3>Название инструкции 3</h3><p>Ещё одна заготовка для твоего содержимого.</p><button class="btn" onclick="openModal('Название инструкции 3','Категория 3')">Открыть</button></div>
-<div class="card" data-cat="one"><div class="top"><span class="icon">⭐</span><span class="tag">Категория 1</span></div><h3>Название инструкции 4</h3><p>Скопируй эту карточку, если нужно добавить ещё.</p><button class="btn" onclick="openModal('Название инструкции 4','Категория 1')">Открыть</button></div>
-</div><div id="empty" class="empty">Ничего не найдено.</div></div></section>
-<section id="about"><div class="wrap"><h2>О сайте</h2><div class="card"><p>Здесь можешь написать информацию о проекте.</p></div></div></section></main><footer>© 2026 Уроки+ · Твой текст здесь</footer>
-<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div class="box"><button class="close" onclick="closeModal()">×</button><small id="mtag"></small><h2 id="mtitle"></h2><h3>Шаг 1</h3><p>Здесь будет твой текст.</p><h3>Шаг 2</h3><p>Здесь будет следующий шаг.</p><h3>Важно</h3><p>Дополнительная информация.</p></div></div>
-<script>const modal=document.getElementById('modal');function openModal(t,c){document.getElementById('mtitle').textContent=t;document.getElementById('mtag').textContent=c;modal.classList.add('open')}function closeModal(){modal.classList.remove('open')}document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});const search=document.getElementById('search'),cards=[...document.querySelectorAll('.card[data-cat]')],filters=[...document.querySelectorAll('.filter')],empty=document.getElementById('empty');let cat='all';function update(){let q=search.value.toLowerCase(),n=0;cards.forEach(c=>{let ok=(cat==='all'||c.dataset.cat===cat)&&c.textContent.toLowerCase().includes(q);c.style.display=ok?'':'none';if(ok)n++});empty.style.display=n?'none':'block'}search.oninput=update;filters.forEach(b=>b.onclick=()=>{filters.forEach(x=>x.classList.remove('active'));b.classList.add('active');cat=b.dataset.cat;update()})</script></body></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЄҐ+</title>
+
+<style>
+:root{
+  --bg:#07111f;
+  --card:#0e213a;
+  --border:#1b3a5d;
+  --text:#e8f2ff;
+  --muted:#91a7c0;
+  --a:#38bdf8;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#08182b;
+  border-bottom:1px solid var(--border);
+}
+
+.nav{
+  max-width:1100px;
+  margin:auto;
+  padding:16px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:800;
+  color:white;
+}
+
+nav{
+  display:flex;
+  gap:18px;
+}
+
+nav a{
+  color:var(--muted);
+  text-decoration:none;
+}
+
+nav a:hover{
+  color:white;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:35px 20px;
+}
+
+.hero{
+  text-align:center;
+  padding:30px 0 20px;
+}
+
+.badge{
+  display:inline-block;
+  padding:8px 14px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  color:var(--a);
+  background:#0b1c31;
+  font-size:14px;
+}
+
+h1{
+  font-size:42px;
+  margin:18px 0 10px;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:17px;
+}
+
+.filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:25px 0 10px;
+}
+
+.filter,
+.class-btn{
+  border:1px solid var(--border);
+  background:#0b1c31;
+  color:var(--muted);
+  padding:10px 15px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.filter:hover,
+.class-btn:hover{
+  color:white;
+  border-color:var(--a);
+}
+
+.filter.active,
+.class-btn.active{
+  background:#123252;
+  color:white;
+  border-color:var(--a);
+}
+
+.class-tabs{
+  display:none;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:15px 0 25px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+}
+
+.card h3{
+  margin-top:0;
+  margin-bottom:10px;
+}
+
+.card p{
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.card ul{
+  color:var(--muted);
+  padding-left:20px;
+  line-height:1.7;
+}
+
+.card a{
+  display:inline-block;
+  margin-top:10px;
+  color:var(--a);
+  text-decoration:none;
+}
+
+.card a:hover{
+  text-decoration:underline;
+}
+
+.empty{
+  display:none;
+  text-align:center;
+  color:var(--muted);
+  padding:30px;
+}
+
+.about{
+  margin-top:55px;
+  padding:25px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#0b1c31;
+}
+
+.about h2{
+  margin-top:0;
+}
+
+.about p{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+footer{
+  margin-top:50px;
+  border-top:1px solid var(--border);
+  padding:25px 20px;
+  text-align:center;
+  color:var(--muted);
+}
+
+@media(max-width:600px){
+  h1{
+    font-size:32px;
+  }
+
+  .nav{
+    flex-direction:column;
+    gap:12px;
+  }
+
+  nav{
+    gap:12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">ЄҐ+</div>
+
+    <nav>
+      <a href="#instructions">Инструкции</a>
+      <a href="#about">О сайте</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="badge">
+      Официальный сайт<br>
+      «Ебли с геометрией☪️»
+    </div>
+
+    <h1>ЄҐ+</h1>
+
+    <p>
+      ГДЗ, полезные материалы и всё необходимое для учёбы.
+    </p>
+  </section>
+
+  <section id="instructions">
+
+    <div class="filters">
+
+      <button class="filter active" data-cat="all">
+        Все
+      </button>
+
+      <button class="filter" data-cat="one">
+        ГДЗ📚
+      </button>
+
+      <button class="filter" data-cat="two">
+        12 баллов📗
+      </button>
+
+      <button class="filter" data-cat="three">
+        Новости материнки🗞
+      </button>
+
+      <button class="filter" data-cat="four">
+        Тянем время⏰️
+      </button>
+
+    </div>
+
+    <div class="class-tabs" id="classTabs">
+
+      <button class="class-btn" data-class="all">
+        Все
+      </button>
+
+      <button class="class-btn" data-class="1">
+        1 класс
+      </button>
+
+      <button class="class-btn" data-class="2">
+        2 класс
+      </button>
+
+      <button class="class-btn" data-class="3">
+        3 класс
+      </button>
+
+      <button class="class-btn" data-class="4">
+        4 класс
+      </button>
+
+      <button class="class-btn" data-class="5">
+        5 класс
+      </button>
+
+      <button class="class-btn" data-class="6">
+        6 класс
+      </button>
+
+      <button class="class-btn active" data-class="7">
+        7 класс
+      </button>
+
+      <button class="class-btn" data-class="8">
+        8 класс
+      </button>
+
+      <button class="class-btn" data-class="9">
+        9 класс
+      </button>
+
+      <button class="class-btn" data-class="10">
+        10 класс
+      </button>
+
+      <button class="class-btn" data-class="11">
+        11 класс
+      </button>
+
+    </div>
+
+    <div class="grid">
+
+      <!-- ГДЗ -->
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>Геометрия</h3>
+        <p>ГДЗ по геометрии.</p>
+        <a href="https://4book.org/gdz-reshebniki-ukraina/7-klas/gdz-geometriya-7-klas-merzlyak-2024" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>Алгебра</h3>
+        <p>ГДЗ по алгебре.</p>
+        <a href="https://vshkole.com/8-klass/reshebniki/algebra/os-ister-2025" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>Физика</h3>
+        <p>ГДЗ по физике.</p>
+        <a href="https://gdzbariahtar.kyiv.ua/gdz-fizyka-8-klas-baryahtar" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>Химия</h3>
+        <p>ГДЗ по химии.</p>
+        <a href="https://12baliv.com.ua/gdz-8-class-khimiya-hryhorovych-yu-nedorub-2025?utm_source=chatgpt.com" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>Биология</h3>
+        <p>ГДЗ по биологии.</p>
+        <a href="https://4book.org/gdz-reshebniki-ukraina/7-klas/gdz-biologiya-7-klas-balan-2024" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>Украинский язык</h3>
+        <p>ГДЗ по украинскому языку.</p>
+        <a href="https://12baliv.com.ua/gdz-8-class-ukrayinska-mova-avramenko-tyschenko-2025" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>Украинская литература</h3>
+        <p>ГДЗ по украинской литературе.</p>
+        <a href="https://12baliv.com.ua/gdz-8-class-ukrayinska-literatura-avramenko-2025" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>Зарубежная литература</h3>
+        <p>ГДЗ по зарубежной литературе.</p>
+        <a href="https://gdzonline.net/888-zarubizhna-7-nikolenko.html" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>История</h3>
+        <p>Украина и мир.</p>
+        <a href="https://historian.in.ua/%D0%B3%D0%B4%D0%B7-%D1%96%D1%81%D1%82%D0%BE%D1%80%D1%96%D1%8F-%D1%83%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B0-%D1%96-%D1%81%D0%B2%D1%96%D1%82-8-%D0%BA%D0%BB%D0%B0%D1%81-%D0%B2%D0%B0%D1%81%D0%B8%D0%BB/" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>География</h3>
+        <p>ГДЗ по географии.</p>
+        <a href="https://12baliv.com.ua/gdz-8-class-heohrafiya-kobernik-kovalenko-2025" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>Английский язык</h3>
+        <p>ГДЗ по английскому языку.</p>
+        <a href="https://gdzonline.net/903-english-8-mitchell.html" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>Всемирная история</h3>
+        <p>ГДЗ по всемирной истории.</p>
+        <a href="https://12baliv.com.ua/gdz-8-class-vsesvitnya-istoriya-hisem-martynyuk-2025" target="_blank">
+          Открыть ГДЗ
+        </a>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>История Украины</h3>
+        <p>Пока нет ГДЗ.</p>
+      </article>
+
+      <article class="card" data-cat="one" data-class="7">
+        <h3>История: Украина и мир</h3>
+        <p>Пока нет ГДЗ.</p>
+      </article>
+
+
+      <!-- 12 БАЛЛОВ -->
+
+      <article class="card" data-cat="two">
+        <h3>Алгебра</h3>
+        <ul>
+          <li>Работа на уроке</li>
+          <li>Тесты, контрольные и т.д.</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>Геометрия</h3>
+        <ul>
+          <li>Работа на уроке</li>
+          <li>Тесты, контрольные и т.д.</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>История</h3>
+        <ul>
+          <li>Д/З</li>
+          <li>Активность на уроке</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>Физика</h3>
+        <ul>
+          <li>Активность на уроке</li>
+          <li>Лабараторные работы</li>
+          <li>Контрольные, тесты и т.д.</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>Химия</h3>
+        <ul>
+          <li>Активность на уроке</li>
+          <li>Лабараторные работы</li>
+          <li>Контрольные, тесты и т.д.</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>Биология</h3>
+        <ul>
+          <li>Знание темы</li>
+          <li>Активность на уроке</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>География</h3>
+        <ul>
+          <li>Активность на уроке</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>Укр мова</h3>
+        <ul>
+          <li>Ответы на уроке</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>Укр літ</h3>
+        <ul>
+          <li>Прочитанное Д/З</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>Зар літ</h3>
+        <ul>
+          <li>Прочитанное Д/З</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>Технології</h3>
+        <ul>
+          <li>Принёс материал на проект</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="two">
+        <h3>Польский</h3>
+        <ul>
+          <li>Работа на уроке</li>
+        </ul>
+      </article>
+
+
+      <!-- ТЯНЕМ ВРЕМЯ -->
+
+      <article class="card" data-cat="four">
+        <h3>Медленное чтение</h3>
+
+        <p>
+          Во время чтения можно читать немного медленнее обычного:
+          примерно 80 слов в минуту вместо 120. Делай более длинные
+          паузы после точек и немного увеличивай паузы после запятых.
+          Если встречается незнакомый термин, можно уточнить его значение.
+          Даже если слово знакомое, можно попросить дополнительно объяснить,
+          что оно означает именно в данном контексте.
+        </p>
+      </article>
+
+      <article class="card" data-cat="four">
+        <h3>Проверка ДЗ</h3>
+
+        <p>
+          При проверке домашнего задания сначала уточни, какое именно
+          задание нужно проверить. Найди нужный номер и сформулируй
+          полный ответ, а не только короткий результат. Например,
+          вместо одного короткого ответа можно полностью проговорить
+          решение или объяснить, откуда получился результат.
+        </p>
+      </article>
+
+      <article class="card" data-cat="four">
+        <h3>Вопросы по теме</h3>
+
+        <p>
+          Во время объяснения можно задавать вопросы по уже сказанному:
+          попросить повторить условие задания, уточнить, что именно
+          записать в тетрадь, или спросить значение непонятного слова.
+          Лучше, чтобы вопросы оставались связанными с темой урока.
+        </p>
+      </article>
+
+
+      <!-- НОВОСТИ -->
+
+      <article class="card" data-cat="three">
+        <h3>Новости</h3>
+        <p>
+          Здесь будут появляться новости и обновления сайта.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="empty" id="empty">
+      В этой категории пока ничего нет.
+    </div>
+
+  </section>
+
+
+  <section class="about" id="about">
+
+    <h2>О сайте</h2>
+
+    <p>
+      Вечер в хату это сайт «Ебли с Геометрией☪️», тут мы покланяемся
+      аллаху, читаем Коран и т.д. Вобщем всем удачного
+      времяпровождения на нашем сайтикеее
+    </p>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 ЄҐ+ · Твой текст здесь
+</footer>
+
+
+<script>
+const cards = [
+  ...document.querySelectorAll('.card[data-cat]')
+];
+
+const filters = [
+  ...document.querySelectorAll('.filter')
+];
+
+const classTabs = [
+  ...document.querySelectorAll('.class-btn')
+];
+
+const empty = document.getElementById('empty');
+const classTabsBox = document.getElementById('classTabs');
+
+let cat = 'all';
+let selectedClass = 'all';
+
+
+function update(){
+
+  let n = 0;
+
+  cards.forEach(card => {
+
+    const categoryOK =
+      cat === 'all' ||
+      card.dataset.cat === cat;
+
+    const classOK =
+      cat !== 'one' ||
+      selectedClass === 'all' ||
+      card.dataset.class === selectedClass;
+
+    const show =
+      categoryOK && classOK;
+
+    card.style.display =
+      show ? '' : 'none';
+
+    if(show) n++;
+
+  });
+
+  empty.style.display =
+    n ? 'none' : 'block';
+}
+
+
+filters.forEach(button => {
+
+  button.onclick = () => {
+
+    filters.forEach(x =>
+      x.classList.remove('active')
+    );
+
+    button.classList.add('active');
+
+    cat = button.dataset.cat;
+
+    classTabsBox.style.display =
+      cat === 'one' ? 'flex' : 'none';
+
+    if(cat === 'one'){
+
+      selectedClass = '7';
+
+      classTabs.forEach(x =>
+        x.classList.remove('active')
+      );
+
+      document
+        .querySelector('.class-btn[data-class="7"]')
+        .classList.add('active');
+
+    }
+
+    update();
+
+  };
+
+});
+
+
+classTabs.forEach(button => {
+
+  button.onclick = () => {
+
+    classTabs.forEach(x =>
+      x.classList.remove('active')
+    );
+
+    button.classList.add('active');
+
+    selectedClass =
+      button.dataset.class;
+
+    update();
+
+  };
+
+});
+
+
+update();
+</script>
+
+</body>
+</html>
