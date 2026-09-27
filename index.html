@@ -13,6 +13,17 @@
   --text:#e8f2ff;
   --muted:#91a7c0;
   --a:#38bdf8;
+  --shadow:0 6px 18px rgba(0,0,0,.14);
+}
+
+body.light-theme{
+  --bg:#f2f7fc;
+  --card:#ffffff;
+  --border:#d7e2ee;
+  --text:#102033;
+  --muted:#60748a;
+  --a:#0284c7;
+  --shadow:0 6px 18px rgba(30,60,90,.08);
 }
 
 *{
@@ -25,202 +36,660 @@ html{
 
 body{
   margin:0;
-  font-family:Arial, sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
   background:var(--bg);
   color:var(--text);
+  transition:.25s;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button,
+select,
+input{
+  font:inherit;
 }
 
 header{
   position:sticky;
   top:0;
-  z-index:10;
-  background:#08182b;
-  border-bottom:1px solid var(--border);
-}
-
-.nav{
-  max-width:1100px;
-  margin:auto;
-  padding:16px 20px;
+  z-index:100;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  padding:10px 18px;
+  background:rgba(7,17,31,.88);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+
+body.light-theme header{
+  background:rgba(242,247,252,.88);
 }
 
 .logo{
-  font-size:24px;
-  font-weight:800;
-  color:white;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:26px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+
+.logo small{
+  font-size:10px;
+  font-weight:500;
+  line-height:1.2;
+  letter-spacing:0;
+  color:var(--muted);
+  max-width:180px;
 }
 
 nav{
   display:flex;
-  gap:18px;
+  gap:7px;
+  align-items:center;
 }
 
 nav a{
-  color:var(--muted);
-  text-decoration:none;
+  color:var(--text);
+  padding:7px 10px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:var(--card);
+  font-size:12px;
+  font-weight:700;
+  transition:.2s;
 }
 
 nav a:hover{
-  color:white;
+  color:var(--a);
+  border-color:var(--a);
 }
 
-.container{
+/* =========================
+   МЕНЮ
+========================= */
+
+.menu-open{
+  position:fixed;
+  left:14px;
+  top:72px;
+  z-index:110;
+  width:44px;
+  height:44px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--card);
+  color:var(--text);
+  cursor:pointer;
+  font-size:21px;
+  box-shadow:var(--shadow);
+}
+
+.side-menu{
+  position:fixed;
+  z-index:200;
+  left:0;
+  top:0;
+  bottom:0;
+  width:290px;
+  padding:24px 18px;
+  background:var(--card);
+  border-right:1px solid var(--border);
+  transform:translateX(-105%);
+  transition:.3s ease;
+  box-shadow:10px 0 40px rgba(0,0,0,.25);
+}
+
+.side-menu.active{
+  transform:translateX(0);
+}
+
+.menu-overlay{
+  position:fixed;
+  z-index:190;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  opacity:0;
+  visibility:hidden;
+  transition:.25s;
+}
+
+.menu-overlay.active{
+  opacity:1;
+  visibility:visible;
+}
+
+.side-menu h2{
+  margin:0 0 20px;
+}
+
+.menu-close{
+  position:absolute;
+  top:18px;
+  right:18px;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  font-size:25px;
+  cursor:pointer;
+}
+
+.side-nav{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.side-nav-item{
+  width:100%;
+  padding:14px 15px;
+  border:1px solid transparent;
+  border-radius:14px;
+  background:transparent;
+  color:var(--text);
+  text-align:left;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.side-nav-item:hover,
+.side-nav-item.active{
+  background:rgba(56,189,248,.1);
+  border-color:var(--border);
+  color:var(--a);
+}
+
+/* =========================
+   ОСНОВА
+========================= */
+
+main{
   max-width:1100px;
   margin:auto;
-  padding:35px 20px;
+  padding:30px 16px 55px;
 }
 
 .hero{
-  text-align:center;
-  padding:30px 0 20px;
+  padding:20px 0 14px;
 }
 
-.badge{
-  display:inline-block;
-  padding:8px 14px;
+.hero h1{
+  margin:0;
+  font-size:clamp(45px,8vw,78px);
+  line-height:.95;
+  letter-spacing:-4px;
+}
+
+/* =========================
+   ТАЙМЕРЫ
+========================= */
+
+.countdowns{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:18px;
+  padding-top:12px;
+  border-top:1px solid var(--border);
+}
+
+.countdown-card{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  background:transparent;
   border:1px solid var(--border);
-  border-radius:999px;
-  color:var(--a);
-  background:#0b1c31;
-  font-size:14px;
+  border-radius:9px;
+  box-shadow:none;
+  transition:.2s;
 }
 
-h1{
-  font-size:42px;
-  margin:18px 0 10px;
+.countdown-card:hover{
+  border-color:var(--a);
 }
 
-.hero p{
-  color:var(--muted);
+.countdown-icon{
   font-size:17px;
+  min-width:21px;
 }
+
+.countdown-card h3{
+  margin:0 0 2px;
+  font-size:10px;
+  font-weight:600;
+  color:var(--muted);
+}
+
+.countdown-card p{
+  margin:0;
+  color:var(--text);
+  font-size:11px;
+  line-height:1.25;
+}
+
+/* =========================
+   ФИЛЬТРЫ
+========================= */
 
 .filters{
   display:flex;
+  gap:6px;
   flex-wrap:wrap;
-  gap:10px;
-  margin:25px 0 10px;
+  margin:16px 0 10px;
 }
 
-.filter,
-.class-btn{
+.filter{
+  padding:7px 10px;
   border:1px solid var(--border);
-  background:#0b1c31;
+  border-radius:9px;
+  background:var(--card);
   color:var(--muted);
-  padding:10px 15px;
-  border-radius:10px;
   cursor:pointer;
-  font-size:14px;
+  transition:.2s;
+  font-size:12px;
 }
 
 .filter:hover,
-.class-btn:hover{
-  color:white;
+.filter.active{
+  color:var(--a);
   border-color:var(--a);
-}
-
-.filter.active,
-.class-btn.active{
-  background:#123252;
-  color:white;
-  border-color:var(--a);
+  background:rgba(56,189,248,.08);
 }
 
 .class-tabs{
-  display:none;
+  display:flex;
+  gap:5px;
   flex-wrap:wrap;
-  gap:8px;
-  margin:15px 0 25px;
+  margin:10px 0 16px;
 }
+
+.class-btn{
+  min-width:34px;
+  padding:6px 8px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--card);
+  color:var(--muted);
+  cursor:pointer;
+  font-size:12px;
+}
+
+.class-btn.active{
+  background:var(--a);
+  border-color:var(--a);
+  color:#00131e;
+}
+
+/* =========================
+   КАРТОЧКИ
+========================= */
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:16px;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
 }
 
 .card{
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  padding:11px;
   background:var(--card);
   border:1px solid var(--border);
-  border-radius:14px;
-  padding:20px;
+  border-radius:12px;
+  box-shadow:none;
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  border-color:var(--a);
+}
+
+.card-icon{
+  font-size:21px;
+  margin-bottom:6px;
 }
 
 .card h3{
-  margin-top:0;
-  margin-bottom:10px;
+  margin:0 0 5px;
+  font-size:14px;
 }
 
 .card p{
+  margin:0;
   color:var(--muted);
-  line-height:1.6;
+  line-height:1.3;
+  flex:1;
+  font-size:12px;
 }
 
-.card ul{
+.card-list{
+  margin:0;
+  padding:0;
+  list-style:none;
   color:var(--muted);
-  padding-left:20px;
-  line-height:1.7;
+  font-size:12px;
+  line-height:1.35;
 }
 
-.card a{
-  display:inline-block;
-  margin-top:10px;
+.card-list li{
+  margin:2px 0;
+}
+
+.card-link{
+  margin-top:9px;
   color:var(--a);
-  text-decoration:none;
-}
-
-.card a:hover{
-  text-decoration:underline;
+  font-weight:700;
+  font-size:12px;
 }
 
 .empty{
   display:none;
+  padding:25px;
   text-align:center;
   color:var(--muted);
-  padding:30px;
 }
 
-.about{
-  margin-top:55px;
-  padding:25px;
+/* =========================
+   О САЙТЕ
+========================= */
+
+.about-bottom{
+  margin-top:16px;
+  padding:13px 15px;
   border:1px solid var(--border);
-  border-radius:14px;
-  background:#0b1c31;
+  border-radius:12px;
+  background:var(--card);
 }
 
-.about h2{
-  margin-top:0;
+.about-bottom h2{
+  margin:0 0 5px;
+  font-size:16px;
 }
 
-.about p{
+.about-bottom p{
+  margin:0;
   color:var(--muted);
-  line-height:1.7;
+  font-size:12px;
+  line-height:1.45;
 }
+
+/* =========================
+   СТРАНИЦЫ
+========================= */
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.page-title{
+  margin-bottom:20px;
+}
+
+.page-title h1{
+  font-size:34px;
+  margin:0 0 8px;
+}
+
+.page-title p{
+  color:var(--muted);
+}
+
+/* =========================
+   НАСТРОЙКИ
+========================= */
+
+.settings-card,
+.schedule-card{
+  padding:20px;
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:16px;
+  margin-bottom:15px;
+}
+
+.setting-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.setting-row:last-child{
+  border-bottom:0;
+}
+
+.setting-row span{
+  color:var(--text);
+}
+
+.setting-row small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.toggle{
+  width:54px;
+  height:30px;
+  border:0;
+  border-radius:999px;
+  background:#334155;
+  cursor:pointer;
+  position:relative;
+}
+
+.toggle::after{
+  content:"";
+  position:absolute;
+  width:22px;
+  height:22px;
+  top:4px;
+  left:4px;
+  border-radius:50%;
+  background:white;
+  transition:.2s;
+}
+
+body.light-theme .toggle{
+  background:var(--a);
+}
+
+body.light-theme .toggle::after{
+  left:28px;
+}
+
+.language-select{
+  padding:9px 12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* =========================
+   КАЛЬКУЛЯТОР
+========================= */
+
+.calculator{
+  max-width:430px;
+  margin:auto;
+  padding:20px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+}
+
+.calculator-display{
+  width:100%;
+  height:75px;
+  margin-bottom:15px;
+  padding:12px 16px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:var(--bg);
+  color:var(--text);
+  text-align:right;
+  font-size:30px;
+  outline:none;
+}
+
+.calculator-buttons{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.calc-btn{
+  height:60px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:var(--bg);
+  color:var(--text);
+  cursor:pointer;
+  font-size:20px;
+  transition:.15s;
+}
+
+.calc-btn:hover{
+  border-color:var(--a);
+  background:rgba(56,189,248,.1);
+}
+
+.calc-btn:active{
+  transform:scale(.95);
+}
+
+.calc-equal{
+  background:var(--a);
+  color:#00131e;
+  border-color:var(--a);
+}
+
+.calc-clear{
+  color:#f87171;
+}
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
-  margin-top:50px;
-  border-top:1px solid var(--border);
   padding:25px 20px;
   text-align:center;
   color:var(--muted);
+  border-top:1px solid var(--border);
+  font-size:12px;
 }
 
-@media(max-width:600px){
-  h1{
-    font-size:32px;
+/* =========================
+   АДАПТИВ
+========================= */
+
+@media(max-width:1000px){
+
+  .grid{
+    grid-template-columns:repeat(3,1fr);
   }
 
-  .nav{
-    flex-direction:column;
-    gap:12px;
+}
+
+@media(max-width:850px){
+
+  .countdowns{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:550px){
+
+  header{
+    padding:10px 12px;
+  }
+
+  .logo{
+    font-size:23px;
+  }
+
+  .logo small{
+    font-size:9px;
+    max-width:130px;
   }
 
   nav{
-    gap:12px;
+    gap:5px;
   }
+
+  nav a{
+    padding:7px 8px;
+    font-size:11px;
+  }
+
+  main{
+    padding:25px 12px 45px;
+  }
+
+  .hero h1{
+    letter-spacing:-2px;
+  }
+
+  .countdowns{
+    grid-template-columns:1fr;
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .card{
+    padding:10px;
+  }
+
+  .card-icon{
+    font-size:19px;
+  }
+
+  .card h3{
+    font-size:13px;
+  }
+
+  .card p,
+  .card-list{
+    font-size:11px;
+  }
+
+  .menu-open{
+    top:auto;
+    bottom:18px;
+    left:18px;
+    border-radius:50%;
+  }
+
+  .side-menu{
+    width:85%;
+    max-width:320px;
+  }
+
 }
 </style>
 </head>
@@ -228,409 +697,1504 @@ footer{
 <body>
 
 <header>
-  <div class="nav">
-    <div class="logo">ЄҐ+</div>
 
-    <nav>
-      <a href="#instructions">Инструкции</a>
-      <a href="#about">О сайте</a>
-    </nav>
+  <div class="logo">
+    <span>ЄҐ+</span>
+    <small>
+      Официальный сайт<br>
+      «Ебли с Геометрией☪️»
+    </small>
   </div>
+
+  <nav>
+
+    <a href="#about" data-i18n="aboutLink">
+      О сайте
+    </a>
+
+    <a
+      href="https://t.me/eblya_s_geometriey_gdansk"
+      target="_blank"
+      rel="noopener noreferrer"
+      data-i18n="telegram">
+      Наш канал
+    </a>
+
+  </nav>
+
 </header>
 
-<main class="container">
+
+<!-- =========================
+     МЕНЮ
+========================= -->
+
+<button class="menu-open" id="menuOpen">
+  ☰
+</button>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<aside class="side-menu" id="sideMenu">
+
+  <button class="menu-close" id="menuClose">
+    ×
+  </button>
+
+  <h2>ЄҐ+</h2>
+
+  <div class="side-nav">
+
+    <button
+      class="side-nav-item active"
+      data-page="home">
+      🏠 <span data-i18n="home">Главная</span>
+    </button>
+
+    <button
+      class="side-nav-item"
+      data-page="schedule">
+      📅 <span data-i18n="schedule">Расписание</span>
+    </button>
+
+    <button
+      class="side-nav-item"
+      data-page="calculator">
+      🧮 <span data-i18n="calculator">Калькулятор</span>
+    </button>
+
+    <button
+      class="side-nav-item"
+      data-page="settings">
+      ⚙️ <span data-i18n="settings">Настройки</span>
+    </button>
+
+  </div>
+
+</aside>
+
+
+<!-- =========================
+     ГЛАВНАЯ
+========================= -->
+
+<main id="homePage" class="page active">
 
   <section class="hero">
-    <div class="badge">
-      Официальный сайт<br>
-      «Ебли с геометрией☪️»
-    </div>
-
     <h1>ЄҐ+</h1>
-
-    <p>
-      ГДЗ, полезные материалы и всё необходимое для учёбы.
-    </p>
   </section>
 
-  <section id="instructions">
 
-    <div class="filters">
-
-      <button class="filter active" data-cat="all">
-        Все
-      </button>
-
-      <button class="filter" data-cat="one">
-        ГДЗ📚
-      </button>
-
-      <button class="filter" data-cat="two">
-        12 баллов📗
-      </button>
-
-      <button class="filter" data-cat="three">
-        Новости материнки🗞
-      </button>
-
-      <button class="filter" data-cat="four">
-        Тянем время⏰️
-      </button>
-
-    </div>
-
-    <div class="class-tabs" id="classTabs">
-
-      <button class="class-btn" data-class="all">
-        Все
-      </button>
-
-      <button class="class-btn" data-class="1">
-        1 класс
-      </button>
-
-      <button class="class-btn" data-class="2">
-        2 класс
-      </button>
-
-      <button class="class-btn" data-class="3">
-        3 класс
-      </button>
-
-      <button class="class-btn" data-class="4">
-        4 класс
-      </button>
-
-      <button class="class-btn" data-class="5">
-        5 класс
-      </button>
-
-      <button class="class-btn" data-class="6">
-        6 класс
-      </button>
-
-      <button class="class-btn active" data-class="7">
-        7 класс
-      </button>
-
-      <button class="class-btn" data-class="8">
-        8 класс
-      </button>
-
-      <button class="class-btn" data-class="9">
-        9 класс
-      </button>
-
-      <button class="class-btn" data-class="10">
-        10 класс
-      </button>
-
-      <button class="class-btn" data-class="11">
-        11 класс
-      </button>
-
-    </div>
-
-    <div class="grid">
-
-      <!-- ГДЗ -->
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>Геометрия</h3>
-        <p>ГДЗ по геометрии.</p>
-        <a href="https://4book.org/gdz-reshebniki-ukraina/7-klas/gdz-geometriya-7-klas-merzlyak-2024" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>Алгебра</h3>
-        <p>ГДЗ по алгебре.</p>
-        <a href="https://vshkole.com/8-klass/reshebniki/algebra/os-ister-2025" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>Физика</h3>
-        <p>ГДЗ по физике.</p>
-        <a href="https://gdzbariahtar.kyiv.ua/gdz-fizyka-8-klas-baryahtar" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>Химия</h3>
-        <p>ГДЗ по химии.</p>
-        <a href="https://12baliv.com.ua/gdz-8-class-khimiya-hryhorovych-yu-nedorub-2025?utm_source=chatgpt.com" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>Биология</h3>
-        <p>ГДЗ по биологии.</p>
-        <a href="https://4book.org/gdz-reshebniki-ukraina/7-klas/gdz-biologiya-7-klas-balan-2024" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>Украинский язык</h3>
-        <p>ГДЗ по украинскому языку.</p>
-        <a href="https://12baliv.com.ua/gdz-8-class-ukrayinska-mova-avramenko-tyschenko-2025" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>Украинская литература</h3>
-        <p>ГДЗ по украинской литературе.</p>
-        <a href="https://12baliv.com.ua/gdz-8-class-ukrayinska-literatura-avramenko-2025" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>Зарубежная литература</h3>
-        <p>ГДЗ по зарубежной литературе.</p>
-        <a href="https://gdzonline.net/888-zarubizhna-7-nikolenko.html" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>История</h3>
-        <p>Украина и мир.</p>
-        <a href="https://historian.in.ua/%D0%B3%D0%B4%D0%B7-%D1%96%D1%81%D1%82%D0%BE%D1%80%D1%96%D1%8F-%D1%83%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B0-%D1%96-%D1%81%D0%B2%D1%96%D1%82-8-%D0%BA%D0%BB%D0%B0%D1%81-%D0%B2%D0%B0%D1%81%D0%B8%D0%BB/" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>География</h3>
-        <p>ГДЗ по географии.</p>
-        <a href="https://12baliv.com.ua/gdz-8-class-heohrafiya-kobernik-kovalenko-2025" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>Английский язык</h3>
-        <p>ГДЗ по английскому языку.</p>
-        <a href="https://gdzonline.net/903-english-8-mitchell.html" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>Всемирная история</h3>
-        <p>ГДЗ по всемирной истории.</p>
-        <a href="https://12baliv.com.ua/gdz-8-class-vsesvitnya-istoriya-hisem-martynyuk-2025" target="_blank">
-          Открыть ГДЗ
-        </a>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>История Украины</h3>
-        <p>Пока нет ГДЗ.</p>
-      </article>
-
-      <article class="card" data-cat="one" data-class="7">
-        <h3>История: Украина и мир</h3>
-        <p>Пока нет ГДЗ.</p>
-      </article>
-
-
-      <!-- 12 БАЛЛОВ -->
-
-      <article class="card" data-cat="two">
-        <h3>Алгебра</h3>
-        <ul>
-          <li>Работа на уроке</li>
-          <li>Тесты, контрольные и т.д.</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>Геометрия</h3>
-        <ul>
-          <li>Работа на уроке</li>
-          <li>Тесты, контрольные и т.д.</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>История</h3>
-        <ul>
-          <li>Д/З</li>
-          <li>Активность на уроке</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>Физика</h3>
-        <ul>
-          <li>Активность на уроке</li>
-          <li>Лабараторные работы</li>
-          <li>Контрольные, тесты и т.д.</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>Химия</h3>
-        <ul>
-          <li>Активность на уроке</li>
-          <li>Лабараторные работы</li>
-          <li>Контрольные, тесты и т.д.</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>Биология</h3>
-        <ul>
-          <li>Знание темы</li>
-          <li>Активность на уроке</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>География</h3>
-        <ul>
-          <li>Активность на уроке</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>Укр мова</h3>
-        <ul>
-          <li>Ответы на уроке</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>Укр літ</h3>
-        <ul>
-          <li>Прочитанное Д/З</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>Зар літ</h3>
-        <ul>
-          <li>Прочитанное Д/З</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>Технології</h3>
-        <ul>
-          <li>Принёс материал на проект</li>
-        </ul>
-      </article>
-
-      <article class="card" data-cat="two">
-        <h3>Польский</h3>
-        <ul>
-          <li>Работа на уроке</li>
-        </ul>
-      </article>
-
-
-      <!-- ТЯНЕМ ВРЕМЯ -->
-
-      <article class="card" data-cat="four">
-        <h3>Медленное чтение</h3>
-
-        <p>
-          Во время чтения можно читать немного медленнее обычного:
-          примерно 80 слов в минуту вместо 120. Делай более длинные
-          паузы после точек и немного увеличивай паузы после запятых.
-          Если встречается незнакомый термин, можно уточнить его значение.
-          Даже если слово знакомое, можно попросить дополнительно объяснить,
-          что оно означает именно в данном контексте.
-        </p>
-      </article>
-
-      <article class="card" data-cat="four">
-        <h3>Проверка ДЗ</h3>
-
-        <p>
-          При проверке домашнего задания сначала уточни, какое именно
-          задание нужно проверить. Найди нужный номер и сформулируй
-          полный ответ, а не только короткий результат. Например,
-          вместо одного короткого ответа можно полностью проговорить
-          решение или объяснить, откуда получился результат.
-        </p>
-      </article>
-
-      <article class="card" data-cat="four">
-        <h3>Вопросы по теме</h3>
-
-        <p>
-          Во время объяснения можно задавать вопросы по уже сказанному:
-          попросить повторить условие задания, уточнить, что именно
-          записать в тетрадь, или спросить значение непонятного слова.
-          Лучше, чтобы вопросы оставались связанными с темой урока.
-        </p>
-      </article>
-
-
-      <!-- НОВОСТИ -->
-
-      <article class="card" data-cat="three">
-        <h3>Новости</h3>
-        <p>
-          Здесь будут появляться новости и обновления сайта.
-        </p>
-      </article>
-
-    </div>
-
-    <div class="empty" id="empty">
-      В этой категории пока ничего нет.
-    </div>
+  <!-- ФИЛЬТРЫ -->
+
+  <section class="filters">
+
+    <button
+      class="filter active"
+      data-cat="one"
+      data-i18n="gdz">
+      ГДЗ📚
+    </button>
+
+    <button
+      class="filter"
+      data-cat="two"
+      data-i18n="points">
+      12 баллов📗
+    </button>
+
+    <button
+      class="filter"
+      data-cat="three"
+      data-i18n="news">
+      Новости материнки🗞
+    </button>
+
+    <button
+      class="filter"
+      data-cat="four"
+      data-i18n="time">
+      Тянем время⏰️
+    </button>
 
   </section>
 
 
-  <section class="about" id="about">
+  <!-- КЛАССЫ -->
 
-    <h2>О сайте</h2>
+  <div class="class-tabs" id="classTabs">
 
-    <p>
-      Вечер в хату это сайт «Ебли с Геометрией☪️», тут мы покланяемся
-      аллаху, читаем Коран и т.д. Вобщем всем удачного
-      времяпровождения на нашем сайтикеее
+    <button class="class-btn" data-class="1">1</button>
+    <button class="class-btn" data-class="2">2</button>
+    <button class="class-btn" data-class="3">3</button>
+    <button class="class-btn" data-class="4">4</button>
+    <button class="class-btn" data-class="5">5</button>
+    <button class="class-btn" data-class="6">6</button>
+    <button class="class-btn active" data-class="7">7</button>
+    <button class="class-btn" data-class="8">8</button>
+    <button class="class-btn" data-class="9">9</button>
+    <button class="class-btn" data-class="10">10</button>
+    <button class="class-btn" data-class="11">11</button>
+
+  </div>
+
+
+  <section class="grid" id="cards">
+
+    <!-- ГДЗ -->
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">📐</div>
+      <h3 data-i18n="geometry">Геометрия</h3>
+      <p data-i18n="geometryDesc">ГДЗ по геометрии.</p>
+      <a
+        class="card-link"
+        href="https://4book.org/gdz-reshebniki-ukraina/7-klas/gdz-geometriya-7-klas-merzlyak-2024"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">➗</div>
+      <h3 data-i18n="algebra">Алгебра</h3>
+      <p data-i18n="algebraDesc">ГДЗ по алгебре.</p>
+      <a
+        class="card-link"
+        href="https://vshkole.com/8-klass/reshebniki/algebra/os-ister-2025"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">⚡</div>
+      <h3 data-i18n="physics">Физика</h3>
+      <p data-i18n="physicsDesc">ГДЗ по физике.</p>
+      <a
+        class="card-link"
+        href="https://gdzbariahtar.kyiv.ua/gdz-fizyka-8-klas-baryahtar"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">🧪</div>
+      <h3 data-i18n="chemistry">Химия</h3>
+      <p data-i18n="chemistryDesc">ГДЗ по химии.</p>
+      <a
+        class="card-link"
+        href="https://12baliv.com.ua/gdz-8-class-khimiya-hryhorovych-yu-nedorub-2025?utm_source=chatgpt.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">🧬</div>
+      <h3 data-i18n="biology">Биология</h3>
+      <p data-i18n="biologyDesc">ГДЗ по биологии.</p>
+      <a
+        class="card-link"
+        href="https://4book.org/gdz-reshebniki-ukraina/7-klas/gdz-biologiya-7-klas-balan-2024"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">🇺🇦</div>
+      <h3 data-i18n="ukrainian">Украинский язык</h3>
+      <p data-i18n="ukrainianDesc">ГДЗ по украинскому языку.</p>
+      <a
+        class="card-link"
+        href="https://12baliv.com.ua/gdz-8-class-ukrayinska-mova-avramenko-tyschenko-2025"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">📖</div>
+      <h3 data-i18n="ukrLiterature">Украинская литература</h3>
+      <p data-i18n="ukrLiteratureDesc">ГДЗ по украинской литературе.</p>
+      <a
+        class="card-link"
+        href="https://12baliv.com.ua/gdz-8-class-ukrayinska-literatura-avramenko-2025"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">📚</div>
+      <h3 data-i18n="foreignLiterature">Зарубежная литература</h3>
+      <p data-i18n="foreignLiteratureDesc">ГДЗ по зарубежной литературе.</p>
+      <a
+        class="card-link"
+        href="https://gdzonline.net/888-zarubizhna-7-nikolenko.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">🏛️</div>
+      <h3 data-i18n="history">История</h3>
+      <p data-i18n="historyDesc">ГДЗ по истории.</p>
+      <a
+        class="card-link"
+        href="https://historian.in.ua/%D0%B3%D0%B4%D0%B7-%D1%96%D1%81%D1%82%D0%BE%D1%80%D1%96%D1%8F-%D1%83%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B0-%D1%96-%D1%81%D0%B2%D1%96%D1%82-8-%D0%BA%D0%BB%D0%B0%D1%81-%D0%B2%D0%B0%D1%81%D0%B8%D0%BB/"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">🌍</div>
+      <h3 data-i18n="geography">География</h3>
+      <p data-i18n="geographyDesc">ГДЗ по географии.</p>
+      <a
+        class="card-link"
+        href="https://12baliv.com.ua/gdz-8-class-heohrafiya-kobernik-kovalenko-2025"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">🇬🇧</div>
+      <h3 data-i18n="english">Английский</h3>
+      <p data-i18n="englishDesc">ГДЗ по английскому языку.</p>
+      <a
+        class="card-link"
+        href="https://gdzonline.net/903-english-8-mitchell.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">🌎</div>
+      <h3 data-i18n="worldHistory">Всемирная история</h3>
+      <p data-i18n="worldHistoryDesc">ГДЗ по всемирной истории.</p>
+      <a
+        class="card-link"
+        href="https://12baliv.com.ua/gdz-8-class-vsesvitnya-istoriya-hisem-martynyuk-2025"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="openGdz">
+        Открыть ГДЗ →
+      </a>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">🇺🇦</div>
+      <h3 data-i18n="historyUkraine">История Украины</h3>
+      <p data-i18n="noGdz">Пока нет ГДЗ.</p>
+    </article>
+
+    <article class="card" data-cat="one" data-class="7">
+      <div class="card-icon">📜</div>
+      <h3 data-i18n="historyUkraineWorld">История: Украина и мир</h3>
+      <p data-i18n="noGdz">Пока нет ГДЗ.</p>
+    </article>
+
+
+    <!-- 12 БАЛЛОВ -->
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">➗</div>
+      <h3 data-i18n="algebra">Алгебра</h3>
+      <ul class="card-list">
+        <li data-i18n="algebraWork">• Работа на уроке</li>
+        <li data-i18n="algebraTests">• Тесты, контрольные и т.д.</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">📐</div>
+      <h3 data-i18n="geometry">Геометрия</h3>
+      <ul class="card-list">
+        <li data-i18n="geometryWork">• Работа на уроке</li>
+        <li data-i18n="geometryTests">• Тесты, контрольные и т.д.</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">🏛️</div>
+      <h3 data-i18n="history">История</h3>
+      <ul class="card-list">
+        <li data-i18n="historyHomework">• Д/З</li>
+        <li data-i18n="historyActivity">• Активность на уроке</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">⚡</div>
+      <h3 data-i18n="physics">Физика</h3>
+      <ul class="card-list">
+        <li data-i18n="physicsActivity">• Активность на уроке</li>
+        <li data-i18n="physicsLabs">• Лабараторные работы</li>
+        <li data-i18n="physicsTests">• Контрольные, тесты и т.д.</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">🧪</div>
+      <h3 data-i18n="chemistry">Химия</h3>
+      <ul class="card-list">
+        <li data-i18n="chemistryActivity">• Активность на уроке</li>
+        <li data-i18n="chemistryLabs">• Лабараторные работы</li>
+        <li data-i18n="chemistryTests">• Контрольные, тесты и т.д.</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">🧬</div>
+      <h3 data-i18n="biology">Биология</h3>
+      <ul class="card-list">
+        <li data-i18n="biologyKnowledge">• Знание темы</li>
+        <li data-i18n="biologyActivity">• Активность на уроке</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">🌍</div>
+      <h3 data-i18n="geography">География</h3>
+      <ul class="card-list">
+        <li data-i18n="geographyActivity">• Активность на уроке</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">🇺🇦</div>
+      <h3 data-i18n="ukrainianShort">Укр мова</h3>
+      <ul class="card-list">
+        <li data-i18n="ukrainianAnswers">• Ответы на уроке</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">📖</div>
+      <h3 data-i18n="ukrLitShort">Укр літ</h3>
+      <ul class="card-list">
+        <li data-i18n="ukrLitHomework">• Прочитанное Д/З</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">📚</div>
+      <h3 data-i18n="foreignLitShort">Зар літ</h3>
+      <ul class="card-list">
+        <li data-i18n="foreignLitHomework">• Прочитанное Д/З</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">🛠️</div>
+      <h3 data-i18n="technology">Технології</h3>
+      <ul class="card-list">
+        <li data-i18n="technologyMaterial">• Принёс материал на проект</li>
+      </ul>
+    </article>
+
+    <article class="card" data-cat="two">
+      <div class="card-icon">🇵🇱</div>
+      <h3 data-i18n="polish">Польский</h3>
+      <ul class="card-list">
+        <li data-i18n="polishWork">• Работа на уроке</li>
+      </ul>
+    </article>
+
+
+    <!-- НОВОСТИ -->
+
+    <article class="card" data-cat="three">
+      <div class="card-icon">🗞️</div>
+      <h3 data-i18n="newsTitle">Новости</h3>
+      <p data-i18n="newsText">
+        Здесь будут появляться новости и обновления сайта.
+      </p>
+    </article>
+
+
+    <!-- ТЯНЕМ ВРЕМЯ -->
+
+    <article class="card" data-cat="four">
+      <div class="card-icon">📖</div>
+      <h3 data-i18n="slowReading">Медленное чтение</h3>
+      <p data-i18n="slowReadingText">
+        Во время чтения можно читать немного медленнее обычного: примерно 80 слов в минуту вместо 120. Делай более длинные паузы после точек и немного увеличивай паузы после запятых. Если встречается незнакомый термин, можно уточнить его значение. Даже если слово знакомое, можно попросить дополнительно объяснить, что оно означает именно в данном контексте.
+      </p>
+    </article>
+
+    <article class="card" data-cat="four">
+      <div class="card-icon">📝</div>
+      <h3 data-i18n="homeworkCheck">Проверка ДЗ</h3>
+      <p data-i18n="homeworkCheckText">
+        При проверке домашнего задания сначала уточни, какое именно задание нужно проверить. Найди нужный номер и сформулируй полный ответ, а не только короткий результат. Например, вместо одного короткого ответа можно полностью проговорить решение или объяснить, откуда получился результат.
+      </p>
+    </article>
+
+    <article class="card" data-cat="four">
+      <div class="card-icon">❓</div>
+      <h3 data-i18n="topicQuestions">Вопросы по теме</h3>
+      <p data-i18n="topicQuestionsText">
+        Во время объяснения можно задавать вопросы по уже сказанному: попросить повторить условие задания, уточнить, что именно записать в тетрадь, или спросить значение непонятного слова. Лучше, чтобы вопросы оставались связанными с темой урока.
+      </p>
+    </article>
+
+  </section>
+
+
+  <div class="empty" id="empty" data-i18n="empty">
+    Ничего не найдено.
+  </div>
+
+
+  <!-- ТАЙМЕРЫ ВНИЗУ ГЛАВНОЙ -->
+
+  <section class="countdowns">
+
+    <div class="countdown-card">
+
+      <div class="countdown-icon">
+        🏖️
+      </div>
+
+      <div>
+
+        <h3 data-i18n="weekendTitle">
+          До выходных
+        </h3>
+
+        <p id="weekendCountdown">
+          Загрузка...
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="countdown-card">
+
+      <div class="countdown-icon">
+        ☀️
+      </div>
+
+      <div>
+
+        <h3 data-i18n="summerTitle">
+          До лета
+        </h3>
+
+        <p id="summerCountdown">
+          Загрузка...
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="countdown-card">
+
+      <div class="countdown-icon">
+        ⏰
+      </div>
+
+      <div>
+
+        <h3 data-i18n="lessonEndTitle">
+          До конца урока
+        </h3>
+
+        <p id="lessonCountdown">
+          Загрузка...
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- О САЙТЕ -->
+
+  <section class="about-bottom" id="about">
+
+    <h2 data-i18n="aboutTitle">
+      О сайте
+    </h2>
+
+    <p data-i18n="aboutText">
+      Вечер в хату это сайт «Ебли с Геометрией☪️», тут мы покланяемся аллаху, читаем Коран и т.д. Вобщем всем удачного времяпровождения на нашем сайтикеее
     </p>
 
   </section>
 
 </main>
 
+
+<!-- =========================
+     РАСПИСАНИЕ
+========================= -->
+
+<section id="schedulePage" class="page">
+
+  <main>
+
+    <div class="page-title">
+
+      <h1 data-i18n="scheduleTitle">
+        Расписание
+      </h1>
+
+      <p data-i18n="scheduleText">
+        Здесь будет расписание всех классов.
+      </p>
+
+    </div>
+
+    <div class="schedule-card">
+      📅
+      <span data-i18n="scheduleLater">
+        Расписание добавим позже.
+      </span>
+    </div>
+
+  </main>
+
+</section>
+
+
+<!-- =========================
+     КАЛЬКУЛЯТОР
+========================= -->
+
+<section id="calculatorPage" class="page">
+
+  <main>
+
+    <div class="page-title">
+
+      <h1 data-i18n="calculatorTitle">
+        Калькулятор
+      </h1>
+
+      <p data-i18n="calculatorText">
+        Быстрый калькулятор для учёбы.
+      </p>
+
+    </div>
+
+    <div class="calculator">
+
+      <input
+        class="calculator-display"
+        id="calcDisplay"
+        type="text"
+        value="0"
+        readonly
+      >
+
+      <div class="calculator-buttons">
+
+        <button class="calc-btn calc-clear" data-calc="clear">C</button>
+
+        <button class="calc-btn" data-calc="backspace">⌫</button>
+
+        <button class="calc-btn" data-calc="operator">%</button>
+
+        <button class="calc-btn" data-value="/">÷</button>
+
+        <button class="calc-btn" data-value="7">7</button>
+        <button class="calc-btn" data-value="8">8</button>
+        <button class="calc-btn" data-value="9">9</button>
+        <button class="calc-btn" data-value="*">×</button>
+
+        <button class="calc-btn" data-value="4">4</button>
+        <button class="calc-btn" data-value="5">5</button>
+        <button class="calc-btn" data-value="6">6</button>
+        <button class="calc-btn" data-value="-">−</button>
+
+        <button class="calc-btn" data-value="1">1</button>
+        <button class="calc-btn" data-value="2">2</button>
+        <button class="calc-btn" data-value="3">3</button>
+        <button class="calc-btn" data-value="+">+</button>
+
+        <button class="calc-btn" data-value="0">0</button>
+        <button class="calc-btn" data-value=".">.</button>
+        <button class="calc-btn calc-equal" data-calc="equals">=</button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</section>
+
+
+<!-- =========================
+     НАСТРОЙКИ
+========================= -->
+
+<section id="settingsPage" class="page">
+
+  <main>
+
+    <div class="page-title">
+
+      <h1 data-i18n="settingsTitle">
+        Настройки
+      </h1>
+
+      <p data-i18n="settingsText">
+        Настрой сайт под себя.
+      </p>
+
+    </div>
+
+    <div class="settings-card">
+
+      <div class="setting-row">
+
+        <div>
+
+          <span data-i18n="theme">
+            Тёмная тема
+          </span>
+
+          <small data-i18n="themeDesc">
+            Переключить оформление сайта
+          </small>
+
+        </div>
+
+        <button
+          class="toggle"
+          id="themeToggle">
+        </button>
+
+      </div>
+
+      <div class="setting-row">
+
+        <div>
+
+          <span data-i18n="language">
+            Язык
+          </span>
+
+          <small data-i18n="languageDesc">
+            Выберите язык интерфейса
+          </small>
+
+        </div>
+
+        <select
+          class="language-select"
+          id="languageSelect">
+
+          <option value="ru">
+            Русский
+          </option>
+
+          <option value="uk">
+            Українська
+          </option>
+
+          <option value="pl">
+            Polski
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</section>
+
+
 <footer>
-  © 2026 ЄҐ+ · Твой текст здесь
+  © 2026 ЄҐ+ ·
+  <span data-i18n="footer">
+    Твой текст здесь
+  </span>
 </footer>
 
 
 <script>
-const cards = [
-  ...document.querySelectorAll('.card[data-cat]')
-];
 
-const filters = [
-  ...document.querySelectorAll('.filter')
-];
+/* =========================================
+   ПЕРЕВОДЫ
+========================================= */
 
-const classTabs = [
-  ...document.querySelectorAll('.class-btn')
-];
+const translations = {
 
-const empty = document.getElementById('empty');
-const classTabsBox = document.getElementById('classTabs');
+  ru: {
 
-let cat = 'all';
-let selectedClass = 'all';
+    home:"Главная",
+    schedule:"Расписание",
+    calculator:"Калькулятор",
+    settings:"Настройки",
+
+    aboutLink:"О сайте",
+    aboutTitle:"О сайте",
+    aboutText:"Вечер в хату это сайт «Ебли с Геометрией☪️», тут мы покланяемся аллаху, читаем Коран и т.д. Вобщем всем удачного времяпровождения на нашем сайтикеее",
+    telegram:"Наш канал",
+
+    heroText:"",
+
+    weekendTitle:"До выходных",
+    summerTitle:"До лета",
+    lessonEndTitle:"До конца урока",
+
+    gdz:"ГДЗ📚",
+    points:"12 баллов📗",
+    news:"Новости материнки🗞",
+    time:"Тянем время⏰️",
+
+    geometry:"Геометрия",
+    geometryDesc:"ГДЗ по геометрии.",
+
+    algebra:"Алгебра",
+    algebraDesc:"ГДЗ по алгебре.",
+
+    physics:"Физика",
+    physicsDesc:"ГДЗ по физике.",
+
+    chemistry:"Химия",
+    chemistryDesc:"ГДЗ по химии.",
+
+    biology:"Биология",
+    biologyDesc:"ГДЗ по биологии.",
+
+    ukrainian:"Украинский язык",
+    ukrainianDesc:"ГДЗ по украинскому языку.",
+
+    ukrLiterature:"Украинская литература",
+    ukrLiteratureDesc:"ГДЗ по украинской литературе.",
+
+    foreignLiterature:"Зарубежная литература",
+    foreignLiteratureDesc:"ГДЗ по зарубежной литературе.",
+
+    history:"История",
+    historyDesc:"ГДЗ по истории.",
+
+    geography:"География",
+    geographyDesc:"ГДЗ по географии.",
+
+    english:"Английский",
+    englishDesc:"ГДЗ по английскому языку.",
+
+    worldHistory:"Всемирная история",
+    worldHistoryDesc:"ГДЗ по всемирной истории.",
+
+    historyUkraine:"История Украины",
+    historyUkraineWorld:"История: Украина и мир",
+
+    openGdz:"Открыть ГДЗ →",
+    noGdz:"Пока нет ГДЗ.",
+
+    algebraWork:"• Работа на уроке",
+    algebraTests:"• Тесты, контрольные и т.д.",
+
+    geometryWork:"• Работа на уроке",
+    geometryTests:"• Тесты, контрольные и т.д.",
+
+    historyHomework:"• Д/З",
+    historyActivity:"• Активность на уроке",
+
+    physicsActivity:"• Активность на уроке",
+    physicsLabs:"• Лабараторные работы",
+    physicsTests:"• Контрольные, тесты и т.д.",
+
+    chemistryActivity:"• Активность на уроке",
+    chemistryLabs:"• Лабараторные работы",
+    chemistryTests:"• Контрольные, тесты и т.д.",
+
+    biologyKnowledge:"• Знание темы",
+    biologyActivity:"• Активность на уроке",
+
+    geographyActivity:"• Активность на уроке",
+
+    ukrainianAnswers:"• Ответы на уроке",
+
+    ukrLitHomework:"• Прочитанное Д/З",
+
+    foreignLitHomework:"• Прочитанное Д/З",
+
+    technologyMaterial:"• Принёс материал на проект",
+
+    polishWork:"• Работа на уроке",
+
+    ukrainianShort:"Укр мова",
+    ukrLitShort:"Укр літ",
+    foreignLitShort:"Зар літ",
+    technology:"Технології",
+    polish:"Польский",
+
+    newsTitle:"Новости",
+    newsText:"Здесь будут появляться новости и обновления сайта.",
+
+    slowReading:"Медленное чтение",
+    slowReadingText:"Во время чтения можно читать немного медленнее обычного: примерно 80 слов в минуту вместо 120. Делай более длинные паузы после точек и немного увеличивай паузы после запятых. Если встречается незнакомый термин, можно уточнить его значение. Даже если слово знакомое, можно попросить дополнительно объяснить, что оно означает именно в данном контексте.",
+
+    homeworkCheck:"Проверка ДЗ",
+    homeworkCheckText:"При проверке домашнего задания сначала уточни, какое именно задание нужно проверить. Найди нужный номер и сформулируй полный ответ, а не только короткий результат. Например, вместо одного короткого ответа можно полностью проговорить решение или объяснить, откуда получился результат.",
+
+    topicQuestions:"Вопросы по теме",
+    topicQuestionsText:"Во время объяснения можно задавать вопросы по уже сказанному: попросить повторить условие задания, уточнить, что именно записать в тетрадь, или спросить значение непонятного слова. Лучше, чтобы вопросы оставались связанными с темой урока.",
+
+    empty:"Ничего не найдено.",
+
+    scheduleTitle:"Расписание",
+    scheduleText:"Здесь будет расписание всех классов.",
+    scheduleLater:"Расписание добавим позже.",
+
+    calculatorTitle:"Калькулятор",
+    calculatorText:"Быстрый калькулятор для учёбы.",
+
+    settingsTitle:"Настройки",
+    settingsText:"Настрой сайт под себя.",
+
+    theme:"Тёмная тема",
+    themeDesc:"Переключить оформление сайта",
+
+    language:"Язык",
+    languageDesc:"Выберите язык интерфейса",
+
+    footer:"Твой текст здесь"
+  },
+
+  uk: {
+
+    home:"Головна",
+    schedule:"Розклад",
+    calculator:"Калькулятор",
+    settings:"Налаштування",
+
+    aboutLink:"Про сайт",
+    aboutTitle:"Про сайт",
+    aboutText:"Вечір у хату це сайт «Єблі з Геометрією☪️», тут ми поклоняємося Аллаху, читаємо Коран і т.д. Вобщем всім вдалого проведення часу на нашому сайтикууу",
+    telegram:"Наш канал",
+
+    weekendTitle:"До вихідних",
+    summerTitle:"До літа",
+    lessonEndTitle:"До кінця уроку",
+
+    gdz:"ГДЗ📚",
+    points:"12 балів📗",
+    news:"Новини материнки🗞",
+    time:"Тягнемо час⏰️",
+
+    geometry:"Геометрія",
+    geometryDesc:"ГДЗ з геометрії.",
+
+    algebra:"Алгебра",
+    algebraDesc:"ГДЗ з алгебри.",
+
+    physics:"Фізика",
+    physicsDesc:"ГДЗ з фізики.",
+
+    chemistry:"Хімія",
+    chemistryDesc:"ГДЗ з хімії.",
+
+    biology:"Біологія",
+    biologyDesc:"ГДЗ з біології.",
+
+    ukrainian:"Українська мова",
+    ukrainianDesc:"ГДЗ з української мови.",
+
+    ukrLiterature:"Українська література",
+    ukrLiteratureDesc:"ГДЗ з української літератури.",
+
+    foreignLiterature:"Зарубіжна література",
+    foreignLiteratureDesc:"ГДЗ із зарубіжної літератури.",
+
+    history:"Історія",
+    historyDesc:"ГДЗ з історії.",
+
+    geography:"Географія",
+    geographyDesc:"ГДЗ з географії.",
+
+    english:"Англійська",
+    englishDesc:"ГДЗ з англійської мови.",
+
+    worldHistory:"Всесвітня історія",
+    worldHistoryDesc:"ГДЗ із всесвітньої історії.",
+
+    historyUkraine:"Історія України",
+    historyUkraineWorld:"Історія: Україна і світ",
+
+    openGdz:"Відкрити ГДЗ →",
+    noGdz:"Поки немає ГДЗ.",
+
+    algebraWork:"• Робота на уроці",
+    algebraTests:"• Тести, контрольні тощо",
+
+    geometryWork:"• Робота на уроці",
+    geometryTests:"• Тести, контрольні тощо",
+
+    historyHomework:"• Д/З",
+    historyActivity:"• Активність на уроці",
+
+    physicsActivity:"• Активність на уроці",
+    physicsLabs:"• Лабораторні роботи",
+    physicsTests:"• Контрольні, тести тощо",
+
+    chemistryActivity:"• Активність на уроці",
+    chemistryLabs:"• Лабораторні роботи",
+    chemistryTests:"• Контрольні, тести тощо",
+
+    biologyKnowledge:"• Знання теми",
+    biologyActivity:"• Активність на уроці",
+
+    geographyActivity:"• Активність на уроці",
+
+    ukrainianAnswers:"• Відповіді на уроці",
+
+    ukrLitHomework:"• Прочитане Д/З",
+
+    foreignLitHomework:"• Прочитане Д/З",
+
+    technologyMaterial:"• Приніс матеріал на проєкт",
+
+    polishWork:"• Робота на уроці",
+
+    ukrainianShort:"Укр мова",
+    ukrLitShort:"Укр літ",
+    foreignLitShort:"Зар літ",
+    technology:"Технології",
+    polish:"Польська",
+
+    newsTitle:"Новини",
+    newsText:"Тут з'являтимуться новини та оновлення сайту.",
+
+    slowReading:"Повільне читання",
+    slowReadingText:"Під час читання можна читати трохи повільніше, ніж зазвичай. Робити довші паузи після крапок і трохи збільшувати паузи після ком.",
+
+    homeworkCheck:"Перевірка ДЗ",
+    homeworkCheckText:"Під час перевірки домашнього завдання спочатку уточни, яке саме завдання потрібно перевірити. Знайди потрібний номер і сформулюй повну відповідь.",
+
+    topicQuestions:"Запитання за темою",
+    topicQuestionsText:"Під час пояснення можна ставити запитання щодо вже сказаного.",
+
+    empty:"Нічого не знайдено.",
+
+    scheduleTitle:"Розклад",
+    scheduleText:"Тут буде розклад усіх класів.",
+    scheduleLater:"Розклад додамо пізніше.",
+
+    calculatorTitle:"Калькулятор",
+    calculatorText:"Швидкий калькулятор для навчання.",
+
+    settingsTitle:"Налаштування",
+    settingsText:"Налаштуй сайт під себе.",
+
+    theme:"Темна тема",
+    themeDesc:"Перемкнути оформлення сайту",
+
+    language:"Мова",
+    languageDesc:"Виберіть мову інтерфейсу",
+
+    footer:"Твій текст тут"
+  },
+
+  pl: {
+
+    home:"Główna",
+    schedule:"Plan lekcji",
+    calculator:"Kalkulator",
+    settings:"Ustawienia",
+
+    aboutLink:"O stronie",
+    aboutTitle:"O stronie",
+    aboutText:"Wieczór w chacie, to strona «Jebli z Geometrią☪️», tutaj czcimy Allaha, czytamy Koran itd. W każdym razie życzymy wszystkim miłego spędzania czasu na naszej stronceee",
+    telegram:"Nasz kanał",
+
+    weekendTitle:"Do weekendu",
+    summerTitle:"Do lata",
+    lessonEndTitle:"Do końca lekcji",
+
+    gdz:"Rozwiązania📚",
+    points:"12 punktów📗",
+    news:"Aktualności🗞",
+    time:"Przeciągamy czas⏰️",
+
+    geometry:"Geometria",
+    geometryDesc:"Rozwiązania z geometrii.",
+
+    algebra:"Algebra",
+    algebraDesc:"Rozwiązania z algebry.",
+
+    physics:"Fizyka",
+    physicsDesc:"Rozwiązania z fizyki.",
+
+    chemistry:"Chemia",
+    chemistryDesc:"Rozwiązania z chemii.",
+
+    biology:"Biologia",
+    biologyDesc:"Rozwiązania z biologii.",
+
+    ukrainian:"Język ukraiński",
+    ukrainianDesc:"Rozwiązania z języka ukraińskiego.",
+
+    ukrLiterature:"Literatura ukraińska",
+    ukrLiteratureDesc:"Rozwiązania z literatury ukraińskiej.",
+
+    foreignLiterature:"Literatura zagraniczna",
+    foreignLiteratureDesc:"Rozwiązania z literatury zagranicznej.",
+
+    history:"Historia",
+    historyDesc:"Rozwiązania z historii.",
+
+    geography:"Geografia",
+    geographyDesc:"Rozwiązania z geografii.",
+
+    english:"Angielski",
+    englishDesc:"Rozwiązania z języka angielskiego.",
+
+    worldHistory:"Historia świata",
+    worldHistoryDesc:"Rozwiązania z historii świata.",
+
+    historyUkraine:"Historia Ukrainy",
+    historyUkraineWorld:"Historia: Ukraina i świat",
+
+    openGdz:"Otwórz →",
+    noGdz:"Brak materiałów.",
+
+    algebraWork:"• Praca na lekcji",
+    algebraTests:"• Testy, sprawdziany itd.",
+
+    geometryWork:"• Praca na lekcji",
+    geometryTests:"• Testy, sprawdziany itd.",
+
+    historyHomework:"• Praca domowa",
+    historyActivity:"• Aktywność na lekcji",
+
+    physicsActivity:"• Aktywność na lekcji",
+    physicsLabs:"• Prace laboratoryjne",
+    physicsTests:"• Sprawdziany, testy itd.",
+
+    chemistryActivity:"• Aktywność na lekcji",
+    chemistryLabs:"• Prace laboratoryjne",
+    chemistryTests:"• Sprawdziany, testy itd.",
+
+    biologyKnowledge:"• Znajomość tematu",
+    biologyActivity:"• Aktywność na lekcji",
+
+    geographyActivity:"• Aktywność na lekcji",
+
+    ukrainianAnswers:"• Odpowiedzi na lekcji",
+
+    ukrLitHomework:"• Przeczytana praca domowa",
+
+    foreignLitHomework:"• Przeczytana praca domowa",
+
+    technologyMaterial:"• Przyniósł materiał na projekt",
+
+    polishWork:"• Praca na lekcji",
+
+    ukrainianShort:"Jęz. ukraiński",
+    ukrLitShort:"Lit. ukraińska",
+    foreignLitShort:"Lit. zagraniczna",
+    technology:"Technika",
+    polish:"Polski",
+
+    newsTitle:"Aktualności",
+    newsText:"Tutaj będą pojawiać się wiadomości i aktualizacje strony.",
+
+    slowReading:"Powolne czytanie",
+    slowReadingText:"Podczas czytania można czytać trochę wolniej niż zwykle. Rób dłuższe przerwy po kropkach i trochę dłuższe po przecinkach.",
+
+    homeworkCheck:"Sprawdzanie pracy domowej",
+    homeworkCheckText:"Podczas sprawdzania pracy domowej najpierw ustal, które zadanie trzeba sprawdzić. Znajdź odpowiedni numer i podaj pełną odpowiedź.",
+
+    topicQuestions:"Pytania dotyczące tematu",
+    topicQuestionsText:"Podczas wyjaśniania można zadawać pytania dotyczące tego, co zostało już powiedziane.",
+
+    empty:"Nic nie znaleziono.",
+
+    scheduleTitle:"Plan lekcji",
+    scheduleText:"Tutaj będzie plan lekcji wszystkich klas.",
+    scheduleLater:"Plan lekcji dodamy później.",
+
+    calculatorTitle:"Kalkulator",
+    calculatorText:"Szybki kalkulator do nauki.",
+
+    settingsTitle:"Ustawienia",
+    settingsText:"Dostosuj stronę do siebie.",
+
+    theme:"Ciemny motyw",
+    themeDesc:"Przełącz wygląd strony",
+
+    language:"Język",
+    languageDesc:"Wybierz język interfejsu",
+
+    footer:"Twój tekst tutaj"
+  }
+
+};
+
+
+/* =========================================
+   ЯЗЫК
+========================================= */
+
+function setLanguage(lang){
+
+  const dictionary =
+    translations[lang] || translations.ru;
+
+  document.documentElement.lang = lang;
+
+  document
+    .querySelectorAll("[data-i18n]")
+    .forEach(element => {
+
+      const key =
+        element.dataset.i18n;
+
+      if(dictionary[key] !== undefined){
+        element.textContent =
+          dictionary[key];
+      }
+
+    });
+
+  localStorage.setItem(
+    "language",
+    lang
+  );
+
+}
+
+const savedLanguage =
+  localStorage.getItem("language") || "ru";
+
+document.getElementById(
+  "languageSelect"
+).value = savedLanguage;
+
+setLanguage(savedLanguage);
+
+document
+  .getElementById("languageSelect")
+  .addEventListener("change", e => {
+
+    setLanguage(e.target.value);
+
+  });
+
+
+/* =========================================
+   ТЕМА
+========================================= */
+
+const themeToggle =
+  document.getElementById("themeToggle");
+
+if(
+  localStorage.getItem("theme") === "light"
+){
+  document.body.classList.add(
+    "light-theme"
+  );
+}
+
+themeToggle.addEventListener(
+  "click",
+  () => {
+
+    document.body.classList.toggle(
+      "light-theme"
+    );
+
+    localStorage.setItem(
+      "theme",
+      document.body.classList.contains(
+        "light-theme"
+      )
+      ? "light"
+      : "dark"
+    );
+
+  }
+);
+
+
+/* =========================================
+   МЕНЮ
+========================================= */
+
+const sideMenu =
+  document.getElementById("sideMenu");
+
+const menuOverlay =
+  document.getElementById("menuOverlay");
+
+const menuOpen =
+  document.getElementById("menuOpen");
+
+const menuClose =
+  document.getElementById("menuClose");
+
+
+function openMenu(){
+
+  sideMenu.classList.add("active");
+
+  menuOverlay.classList.add("active");
+
+}
+
+
+function closeMenu(){
+
+  sideMenu.classList.remove("active");
+
+  menuOverlay.classList.remove("active");
+
+}
+
+
+menuOpen.addEventListener(
+  "click",
+  openMenu
+);
+
+menuClose.addEventListener(
+  "click",
+  closeMenu
+);
+
+menuOverlay.addEventListener(
+  "click",
+  closeMenu
+);
+
+
+/* =========================================
+   СТРАНИЦЫ
+========================================= */
+
+const pages = {
+
+  home:
+    document.getElementById(
+      "homePage"
+    ),
+
+  schedule:
+    document.getElementById(
+      "schedulePage"
+    ),
+
+  calculator:
+    document.getElementById(
+      "calculatorPage"
+    ),
+
+  settings:
+    document.getElementById(
+      "settingsPage"
+    )
+
+};
+
+
+document
+  .querySelectorAll(".side-nav-item")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const page =
+          button.dataset.page;
+
+        Object
+          .values(pages)
+          .forEach(element => {
+
+            element.classList.remove(
+              "active"
+            );
+
+          });
+
+        pages[page].classList.add(
+          "active"
+        );
+
+        document
+          .querySelectorAll(
+            ".side-nav-item"
+          )
+          .forEach(item => {
+
+            item.classList.remove(
+              "active"
+            );
+
+          });
+
+        button.classList.add(
+          "active"
+        );
+
+        closeMenu();
+
+        window.scrollTo({
+          top:0,
+          behavior:"smooth"
+        });
+
+      }
+    );
+
+  });
+
+
+/* =========================================
+   СВАЙП МЕНЮ
+========================================= */
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+
+document.addEventListener(
+  "touchstart",
+  e => {
+
+    touchStartX =
+      e.touches[0].clientX;
+
+    touchStartY =
+      e.touches[0].clientY;
+
+  },
+  {passive:true}
+);
+
+
+document.addEventListener(
+  "touchend",
+  e => {
+
+    const touchEndX =
+      e.changedTouches[0].clientX;
+
+    const touchEndY =
+      e.changedTouches[0].clientY;
+
+    const deltaX =
+      touchEndX - touchStartX;
+
+    const deltaY =
+      touchEndY - touchStartY;
+
+    if(
+      Math.abs(deltaX) > 70 &&
+      Math.abs(deltaX) >
+      Math.abs(deltaY)
+    ){
+
+      if(
+        deltaX > 0 &&
+        touchStartX < 80
+      ){
+        openMenu();
+      }
+
+      if(
+        deltaX < 0 &&
+        sideMenu.classList.contains(
+          "active"
+        )
+      ){
+        closeMenu();
+      }
+
+    }
+
+  },
+  {passive:true}
+);
+
+
+/* =========================================
+   ФИЛЬТРЫ
+========================================= */
+
+const cards =
+  [
+    ...document.querySelectorAll(
+      ".card[data-cat]"
+    )
+  ];
+
+const filters =
+  [
+    ...document.querySelectorAll(
+      ".filter"
+    )
+  ];
+
+const classTabs =
+  [
+    ...document.querySelectorAll(
+      ".class-btn"
+    )
+  ];
+
+const empty =
+  document.getElementById(
+    "empty"
+  );
+
+const classTabsBox =
+  document.getElementById(
+    "classTabs"
+  );
+
+
+let cat = "one";
+let selectedClass = "7";
 
 
 function update(){
@@ -640,86 +2204,680 @@ function update(){
   cards.forEach(card => {
 
     const categoryOK =
-      cat === 'all' ||
       card.dataset.cat === cat;
 
     const classOK =
-      cat !== 'one' ||
-      selectedClass === 'all' ||
-      card.dataset.class === selectedClass;
+      cat !== "one" ||
+      selectedClass === "all" ||
+      card.dataset.class ===
+        selectedClass;
 
     const show =
-      categoryOK && classOK;
+      categoryOK &&
+      classOK;
 
     card.style.display =
-      show ? '' : 'none';
+      show ? "" : "none";
 
-    if(show) n++;
+    if(show){
+      n++;
+    }
 
   });
 
   empty.style.display =
-    n ? 'none' : 'block';
+    n ? "none" : "block";
+
 }
 
 
 filters.forEach(button => {
 
-  button.onclick = () => {
+  button.addEventListener(
+    "click",
+    () => {
 
-    filters.forEach(x =>
-      x.classList.remove('active')
-    );
-
-    button.classList.add('active');
-
-    cat = button.dataset.cat;
-
-    classTabsBox.style.display =
-      cat === 'one' ? 'flex' : 'none';
-
-    if(cat === 'one'){
-
-      selectedClass = '7';
-
-      classTabs.forEach(x =>
-        x.classList.remove('active')
+      filters.forEach(item =>
+        item.classList.remove(
+          "active"
+        )
       );
 
-      document
-        .querySelector('.class-btn[data-class="7"]')
-        .classList.add('active');
+      button.classList.add(
+        "active"
+      );
+
+      cat =
+        button.dataset.cat;
+
+      classTabsBox.style.display =
+        cat === "one"
+          ? "flex"
+          : "none";
+
+      update();
 
     }
-
-    update();
-
-  };
+  );
 
 });
 
 
 classTabs.forEach(button => {
 
-  button.onclick = () => {
+  button.addEventListener(
+    "click",
+    () => {
 
-    classTabs.forEach(x =>
-      x.classList.remove('active')
-    );
+      classTabs.forEach(item =>
+        item.classList.remove(
+          "active"
+        )
+      );
 
-    button.classList.add('active');
+      button.classList.add(
+        "active"
+      );
 
-    selectedClass =
-      button.dataset.class;
+      selectedClass =
+        button.dataset.class;
 
-    update();
+      update();
 
-  };
+    }
+  );
 
 });
 
 
+classTabsBox.style.display =
+  "flex";
+
 update();
+
+
+/* =========================================
+   ЧАС ВАРШАВЫ
+========================================= */
+
+function getWarsawDate(){
+
+  const parts =
+    new Intl.DateTimeFormat(
+      "en-CA",
+      {
+        timeZone:"Europe/Warsaw",
+
+        year:"numeric",
+        month:"2-digit",
+        day:"2-digit",
+
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit",
+
+        hourCycle:"h23"
+      }
+    ).formatToParts(
+      new Date()
+    );
+
+  const obj = {};
+
+  parts.forEach(part => {
+
+    if(
+      part.type !== "literal"
+    ){
+      obj[part.type] =
+        part.value;
+    }
+
+  });
+
+  return new Date(
+    `${obj.year}-${obj.month}-${obj.day}T${obj.hour}:${obj.minute}:${obj.second}`
+  );
+
+}
+
+
+/* =========================================
+   ДО ВЫХОДНЫХ
+========================================= */
+
+const weekendCountdown =
+  document.getElementById(
+    "weekendCountdown"
+  );
+
+
+function updateWeekend(){
+
+  const now =
+    getWarsawDate();
+
+  const day =
+    now.getDay();
+
+  if(
+    day === 0 ||
+    day === 6
+  ){
+
+    weekendCountdown.textContent =
+      "Выходные уже здесь 🎉";
+
+    return;
+
+  }
+
+  const daysUntilSaturday =
+    6 - day;
+
+  const target =
+    new Date(now);
+
+  target.setDate(
+    now.getDate() +
+    daysUntilSaturday
+  );
+
+  target.setHours(
+    0,0,0,0
+  );
+
+  const diff =
+    target - now;
+
+  const days =
+    Math.floor(
+      diff / 86400000
+    );
+
+  const hours =
+    Math.floor(
+      (diff % 86400000) /
+      3600000
+    );
+
+  const minutes =
+    Math.floor(
+      (diff % 3600000) /
+      60000
+    );
+
+  const seconds =
+    Math.floor(
+      (diff % 60000) /
+      1000
+    );
+
+  weekendCountdown.textContent =
+    `${days} д. ${hours} ч. ${minutes} мин. ${seconds} сек.`;
+
+}
+
+
+updateWeekend();
+
+setInterval(
+  updateWeekend,
+  1000
+);
+
+
+/* =========================================
+   ДО ЛЕТА
+========================================= */
+
+const summerCountdown =
+  document.getElementById(
+    "summerCountdown"
+  );
+
+
+function updateSummer(){
+
+  const now =
+    getWarsawDate();
+
+  let summer =
+    new Date(
+      now.getFullYear(),
+      5,
+      1,
+      0,0,0
+    );
+
+  if(now >= summer){
+
+    summer =
+      new Date(
+        now.getFullYear() + 1,
+        5,
+        1,
+        0,0,0
+      );
+
+  }
+
+  const diff =
+    summer - now;
+
+  const days =
+    Math.ceil(
+      diff / 86400000
+    );
+
+  if(days === 1){
+
+    summerCountdown.textContent =
+      "Остался 1 день ☀️";
+
+  }else{
+
+    summerCountdown.textContent =
+      `Осталось ${days} дней ☀️`;
+
+  }
+
+}
+
+
+updateSummer();
+
+setInterval(
+  updateSummer,
+  86400000
+);
+
+
+/* =========================================
+   ДО КОНЦА УРОКА
+========================================= */
+
+const lessonCountdown =
+  document.getElementById(
+    "lessonCountdown"
+  );
+
+
+const lessons = [
+
+  ["09:00","09:40"],
+  ["09:50","10:30"],
+  ["10:40","11:20"],
+  ["11:30","12:10"],
+  ["12:20","13:00"],
+  ["13:10","13:50"],
+  ["14:00","14:40"]
+
+];
+
+
+function getWarsawTime(){
+
+  const parts =
+    new Intl.DateTimeFormat(
+      "en-GB",
+      {
+        timeZone:"Europe/Warsaw",
+
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit",
+
+        hourCycle:"h23"
+      }
+    ).formatToParts(
+      new Date()
+    );
+
+  const obj = {};
+
+  parts.forEach(part => {
+
+    if(
+      part.type !== "literal"
+    ){
+      obj[part.type] =
+        part.value;
+    }
+
+  });
+
+  return {
+
+    hours:Number(obj.hour),
+
+    minutes:Number(obj.minute),
+
+    seconds:Number(obj.second)
+
+  };
+
+}
+
+
+function timeToSeconds(time){
+
+  const [hours,minutes] =
+    time
+      .split(":")
+      .map(Number);
+
+  return (
+    hours * 3600 +
+    minutes * 60
+  );
+
+}
+
+
+function updateLessonCountdown(){
+
+  const now =
+    getWarsawTime();
+
+  const currentSeconds =
+    now.hours * 3600 +
+    now.minutes * 60 +
+    now.seconds;
+
+  const weekday =
+    new Intl.DateTimeFormat(
+      "en-US",
+      {
+        timeZone:"Europe/Warsaw",
+        weekday:"short"
+      }
+    ).format(
+      new Date()
+    );
+
+  if(
+    weekday === "Sat" ||
+    weekday === "Sun"
+  ){
+
+    lessonCountdown.textContent =
+      "Сегодня выходной 🎉";
+
+    return;
+
+  }
+
+  for(
+    let i = 0;
+    i < lessons.length;
+    i++
+  ){
+
+    const start =
+      timeToSeconds(
+        lessons[i][0]
+      );
+
+    const end =
+      timeToSeconds(
+        lessons[i][1]
+      );
+
+    if(
+      currentSeconds >= start &&
+      currentSeconds < end
+    ){
+
+      const diff =
+        end -
+        currentSeconds;
+
+      const minutes =
+        Math.floor(
+          diff / 60
+        );
+
+      const seconds =
+        diff % 60;
+
+      lessonCountdown.textContent =
+        `Урок ${i + 1} · ${minutes} мин. ${String(seconds).padStart(2,"0")} сек.`;
+
+      return;
+
+    }
+
+    if(
+      currentSeconds < start
+    ){
+
+      const diff =
+        start -
+        currentSeconds;
+
+      const minutes =
+        Math.floor(
+          diff / 60
+        );
+
+      const seconds =
+        diff % 60;
+
+      lessonCountdown.textContent =
+        `Перемена · следующий урок через ${minutes} мин. ${String(seconds).padStart(2,"0")} сек.`;
+
+      return;
+
+    }
+
+  }
+
+  lessonCountdown.textContent =
+    "Уроки закончились 🎉";
+
+}
+
+
+updateLessonCountdown();
+
+setInterval(
+  updateLessonCountdown,
+  1000
+);
+
+
+/* =========================================
+   КАЛЬКУЛЯТОР
+========================================= */
+
+const calcDisplay =
+  document.getElementById(
+    "calcDisplay"
+  );
+
+let calcExpression = "";
+
+
+function updateCalcDisplay(){
+
+  calcDisplay.value =
+    calcExpression || "0";
+
+}
+
+
+function calculate(){
+
+  if(!calcExpression){
+    return;
+  }
+
+  try{
+
+    if(
+      !/^[0-9+\-*/%.()\s]+$/
+        .test(calcExpression)
+    ){
+      throw new Error();
+    }
+
+    const result =
+      Function(
+        `"use strict"; return (${calcExpression})`
+      )();
+
+    if(
+      typeof result !== "number" ||
+      !Number.isFinite(result)
+    ){
+      throw new Error();
+    }
+
+    calcExpression =
+      String(result);
+
+    updateCalcDisplay();
+
+  }catch{
+
+    calcExpression = "";
+
+    calcDisplay.value =
+      "Ошибка";
+
+    setTimeout(
+      updateCalcDisplay,
+      800
+    );
+
+  }
+
+}
+
+
+document
+  .querySelectorAll("[data-value]")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        calcExpression +=
+          button.dataset.value;
+
+        updateCalcDisplay();
+
+      }
+    );
+
+  });
+
+
+document
+  .querySelectorAll("[data-calc]")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const action =
+          button.dataset.calc;
+
+        if(action === "clear"){
+
+          calcExpression = "";
+
+          updateCalcDisplay();
+
+        }
+
+        if(action === "backspace"){
+
+          calcExpression =
+            calcExpression.slice(
+              0,-1
+            );
+
+          updateCalcDisplay();
+
+        }
+
+        if(action === "equals"){
+
+          calculate();
+
+        }
+
+        if(action === "operator"){
+
+          calcExpression += "%";
+
+          updateCalcDisplay();
+
+        }
+
+      }
+    );
+
+  });
+
+
+/* =========================================
+   КЛАВИАТУРА
+========================================= */
+
+document.addEventListener(
+  "keydown",
+  e => {
+
+    if(
+      !pages.calculator.classList
+        .contains("active")
+    ){
+      return;
+    }
+
+    if(
+      /[0-9+\-*/%.]/.test(e.key)
+    ){
+
+      calcExpression += e.key;
+
+      updateCalcDisplay();
+
+    }
+
+    if(e.key === "Enter"){
+
+      calculate();
+
+    }
+
+    if(e.key === "Backspace"){
+
+      calcExpression =
+        calcExpression.slice(
+          0,-1
+        );
+
+      updateCalcDisplay();
+
+    }
+
+    if(e.key === "Escape"){
+
+      calcExpression = "";
+
+      updateCalcDisplay();
+
+    }
+
+  }
+);
+
 </script>
 
 </body>
