@@ -424,7 +424,23 @@ main{
   background:var(--card);  
   border-radius:16px;  
   margin-bottom:15px;  
-}  
+}
+
+.schedule-class-tabs{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}
+.schedule-class-btn{padding:9px 12px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);cursor:pointer;font-weight:700;font-size:13px}
+.schedule-class-btn:hover,.schedule-class-btn.active{background:var(--a);border-color:var(--a);color:#00131e}
+.schedule-selected-title{margin:0 0 14px;font-size:22px}
+.schedule-days{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.schedule-day{padding:16px 18px;border:1px solid var(--border);border-radius:14px;background:var(--card)}
+.schedule-day h3{margin:0 0 5px;font-size:17px;color:var(--a)}
+.schedule-day ol{margin:0;padding-left:25px;line-height:1.75}
+.schedule-day li{padding-left:3px}
+.schedule-day-meta{margin:0 0 10px;color:var(--muted);font-size:12px;line-height:1.5}
+.schedule-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin:0 0 16px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--card);font-size:12px;color:var(--muted)}
+.schedule-duty{margin:12px 0 0;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text)}
+.schedule-empty{padding:20px;border:1px dashed var(--border);border-radius:14px;color:var(--muted);background:var(--card)}
+@media(max-width:600px){.schedule-days{grid-template-columns:1fr}.schedule-class-btn{padding:8px 10px}}
+  
   
 .setting-row{  
   display:flex;  
@@ -1309,11 +1325,29 @@ footer{
 
 </div>  
 
-<div class="schedule-card">  
-  📅  
-  <span data-i18n="scheduleLater">  
-    Расписание добавим позже.  
-  </span>  
+<div class="schedule-class-tabs" id="scheduleClassTabs" aria-label="Выбор класса">
+  <button class="schedule-class-btn" data-schedule-class="1">1 класс</button>
+  <button class="schedule-class-btn" data-schedule-class="2">2 класс</button>
+  <button class="schedule-class-btn" data-schedule-class="3">3 класс</button>
+  <button class="schedule-class-btn" data-schedule-class="4">4 класс</button>
+  <button class="schedule-class-btn" data-schedule-class="5">5 класс</button>
+  <button class="schedule-class-btn" data-schedule-class="6">6 класс</button>
+  <button class="schedule-class-btn" data-schedule-class="7">7 класс</button>
+  <button class="schedule-class-btn active" data-schedule-class="8">8 класс</button>
+  <button class="schedule-class-btn" data-schedule-class="9">9 класс</button>
+  <button class="schedule-class-btn" data-schedule-class="10">10 класс</button>
+  <button class="schedule-class-btn" data-schedule-class="11">11 класс</button>
+</div>
+<div id="scheduleContent">
+  <h2 class="schedule-selected-title">📅 Расписание — 8 класс</h2>
+  <div class="schedule-legend" aria-label="Обозначения предметов"><span>🔴 Языки и отмеченные предметы</span><span>🟢 Остальные предметы</span><span>🟡 Литература</span></div>
+  <div class="schedule-days">
+    <article class="schedule-day"><h3>Понедельник</h3><p class="schedule-day-meta">Конец уроков: <strong>13:50</strong></p><ol><li>Укр мова 🔴</li><li>Биология 🟢</li><li>Физика 🟢</li><li>Геометрия 🟢</li><li>Английский 🟢</li><li>Укр лит 🟡</li></ol><p class="schedule-duty"><strong>Черговые:</strong> Боря, Даня</p></article>
+    <article class="schedule-day"><h3>Вторник</h3><p class="schedule-day-meta">Конец уроков: <strong>13:50</strong></p><ol><li>Польский язык 🔴</li><li>География 🔴</li><li>История 🟢</li><li>Английский 🟢</li><li>Алгебра 🟢</li><li>Зар лит 🟡</li></ol><p class="schedule-duty"><strong>Черговые:</strong> Кристина, Лера, Саша</p></article>
+    <article class="schedule-day"><h3>Среда</h3><p class="schedule-day-meta">Конец уроков: <strong>14:40</strong></p><ol><li>Ґєомєтрія 🟢</li><li>Укр мова 🔴</li><li>Польский (хавеліуш) 🔴</li><li>Польський (хавеліуш) 🔴</li><li>История 🟢</li><li>Укр лит 🟡</li><li>Виховна 🔴</li></ol><p class="schedule-duty"><strong>Черговые:</strong> Артём, Марьяна, Настя</p></article>
+    <article class="schedule-day"><h3>Четверг</h3><p class="schedule-day-meta">Конец уроков: <strong>13:50</strong></p><ol><li>Химия 🟢</li><li>Польский 🔴</li><li>Физика 🟢</li><li>Труды 🔴</li><li>Труды 🔴</li><li>Информатика 🔴</li></ol><p class="schedule-duty"><strong>Черговые:</strong> Аня, Каролина, Ангелина</p></article>
+    <article class="schedule-day"><h3>Пятница</h3><p class="schedule-day-meta">Конец уроков: <strong>13:50</strong></p><ol><li>Укр мова 🔴</li><li>Алгебра 🟢</li><li>История 🟢</li><li>Химия 🟢</li><li>Биология 🟢</li><li>География 🔴</li></ol><p class="schedule-duty"><strong>Черговые:</strong> Артём (немец), Саня, Кирилл</p></article>
+  </div>
 </div>
 
   </main>  </section>  <section id="calculatorPage" class="page">    <main>  <div class="page-title">  
@@ -1562,7 +1596,7 @@ const translations = {
     empty:"Ничего не найдено.",  
   
     scheduleTitle:"Расписание",  
-    scheduleText:"Здесь будет расписание всех классов.",  
+    scheduleText:"Выбери класс от 1 до 11. Расписание 8 класса уже добавлено.",  
     scheduleLater:"Расписание добавим позже.",  
   
     calculatorTitle:"Калькулятор",  
@@ -1702,7 +1736,7 @@ const translations = {
     empty:"Нічого не знайдено.",  
   
     scheduleTitle:"Розклад",  
-    scheduleText:"Тут буде розклад усіх класів.",  
+    scheduleText:"Обери клас від 1 до 11. Розклад 8 класу вже додано.",  
     scheduleLater:"Розклад додамо пізніше.",  
   
     calculatorTitle:"Калькулятор",  
@@ -1842,7 +1876,7 @@ const translations = {
     empty:"Nic nie znaleziono.",  
   
     scheduleTitle:"Plan lekcji",  
-    scheduleText:"Tutaj będzie plan lekcji wszystkich klas.",  
+    scheduleText:"Wybierz klasę od 1 do 11. Plan lekcji klasy 8 jest już dodany.",  
     scheduleLater:"Plan lekcji dodamy później.",  
   
     calculatorTitle:"Kalkulator",  
@@ -1943,6 +1977,22 @@ menuOpen.addEventListener("click",openMenu);
 menuClose.addEventListener("click",closeMenu);  
 menuOverlay.addEventListener("click",closeMenu);  
   
+
+const scheduleClassButtons = [...document.querySelectorAll(".schedule-class-btn")];
+const scheduleContent = document.getElementById("scheduleContent");
+const scheduleEightMarkup = scheduleContent.innerHTML;
+scheduleClassButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    scheduleClassButtons.forEach(item => item.classList.toggle("active", item === button));
+    const selected = button.dataset.scheduleClass;
+    if (selected === "8") {
+      scheduleContent.innerHTML = scheduleEightMarkup;
+    } else {
+      scheduleContent.innerHTML = `<div class="schedule-empty">📅 Расписание для ${selected} класса пока не добавлено.</div>`;
+    }
+  });
+});
+
 const pages = {  
   
   home:document.getElementById("homePage"),  
